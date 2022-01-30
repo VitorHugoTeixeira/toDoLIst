@@ -1,0 +1,120 @@
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Cinzel&family=Martel:wght@200&family=Roboto+Condensed:wght@300&family=Roboto:wght@100;300&family=Slabo+27px&family=Source+Sans+Pro:wght@600&display=swap');
+*{
+    box-sizing: border-box;
+    text-decoration: none;
+}
+html{
+    height: 100%;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background: hsl(235, 21%, 11%) url('../imgs/bg-desktop-dark.jpg') no-repeat left 0% top 0% / 100vw 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+main{
+    width: 600px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.header{
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    color: #fff;
+    height: 20%;
+}
+.header h1{
+    margin: 0;
+    font-weight: bold;
+    font-size: 2em;
+}
+.sun{
+    font-size: 1.6em;
+}
+.insert-div{
+    width: 100%;
+    height: 80px;
+    background-color: hsl(235, 24%, 19%);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 0 1em 1em hsl(0, 0%, 0%, 0.1);
+    margin-bottom: 40px;
+}
+input[type='radio']{
+    -webkit-appearance:none;
+    width:40px;
+    height:40px;
+    border:1px solid gray;
+    border-radius:50%;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type='radio']:before {
+    content:'';
+    display:block;
+    width: 10px;
+    height: 10px;    
+    border-radius: 50%;    
+  }
+input[type='radio']:checked:before {
+    background:gray;
+}
+
+.insertTask{
+    flex-grow: 1;
+    background: none;
+    border: none;
+    font-family: 'Bree Serif', serif;
+    font-size: 1.1em;
+    color: #fff;
+}
+
+
+.insertTask:focus{
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+}
+
+.task-content{
+    margin-top: 10px;
+    width: 100%;
+    height: 80px;
+    background-color: hsl(235, 24%, 19%);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 0 1em 1em hsl(0, 0%, 0%, 0.1);
+}
+
+.content-task{
+    font-family: 'Bree Serif', serif;
+    font-size: 1.1em;
+    color: #fff;   
+}
+
+@media(max-width:600px){
+    main{
+        width: 400px;
+    }
+}
