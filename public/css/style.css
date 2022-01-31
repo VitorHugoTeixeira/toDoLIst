@@ -29,7 +29,7 @@ main{
     align-items: center;
     padding: 20px;
 }
-.header{
+.header-title{
     align-self: flex-start;
     display: flex;
     justify-content: space-between;
@@ -39,7 +39,7 @@ main{
     color: #fff;
     height: 20%;
 }
-.header h1{
+.header-title h1{
     margin: 0;
     font-weight: bold;
     font-size: 2em;
@@ -94,6 +94,11 @@ input[type='radio']:checked:before {
     box-shadow: 0 0 0 0;
     border: 0 none;
     outline: 0;
+}
+
+.div-task-content{
+    flex-grow: 1;
+    width: 100%;
 }
 
 .task-content{
