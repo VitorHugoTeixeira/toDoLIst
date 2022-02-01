@@ -36,12 +36,12 @@ function insertTask(request, response){
 }
 
 function updatedTask(request, response){
-    const id = parseInt(request.params.id)
-    const [text, concluded] = request.body
-
+    const {text, concluded, id} = request.body
+    
     pool.query('UPDATE list set text=$1, concluded=$2 where ID=$3', [text,concluded, id], (err, result) => {
         if(err) throw `There was an error update the task: ${err}`
-        else response.status(200).send([id, text, concluded])
+        else response.status(200).send('Task updated!')
+
     })
 }
 

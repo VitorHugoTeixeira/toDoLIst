@@ -117,7 +117,8 @@ input[type='radio']:checked:before {
 .content-task{
     font-family: 'Bree Serif', serif;
     font-size: 1.1em;
-    color: #fff;   
+    color: #fff;
+    flex-grow: 1;   
 }
 
 @media(max-width:600px){

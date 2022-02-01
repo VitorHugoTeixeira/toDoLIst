@@ -17,7 +17,7 @@ app.get('/tasks', database.getAllTasks)
 app.post('/tasks', database.insertTask)
 
 //Update task
-app.put('/tasks:id', database.updatedTask)
+app.put('/tasks', database.updatedTask)
 
 //Delete task
 app.delete('/tasks:id', database.deleteTask)

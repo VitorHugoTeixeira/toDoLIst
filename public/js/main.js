@@ -8,10 +8,9 @@ document.addEventListener('DOMContentLoaded', start)
 function start() {
     searchAllTasks(allTasks)
     document.querySelector('#radioInsertTask').addEventListener('click', insertTask)
-
+    document.querySelector('.div-task-content').addEventListener('click', concludeTask)
 }
 
-//Insert task to database and returm an array to insert in my document as new task 
 async function insertTask(e) {
     const inputInsert = document.querySelector('.insertTask')
     const radioButton = document.querySelector('#radioInsertTask')
@@ -51,9 +50,11 @@ function mountTask(taskArray, divToInsert) {
         radio.setAttribute('id', `inputConluded${e.id}`)
         radio.setAttribute('type', 'radio')
         label.setAttribute('for', `inputConluded${e.id}`)
+        label.setAttribute('id', `labelText${e.id}`)
 
         
         label.innerHTML = e.text
+        if(e.concluded) label.style.textDecoration = "line-through"
         radio.checked = e.concluded
 
         divToInsert.appendChild(div)
@@ -64,7 +65,6 @@ function mountTask(taskArray, divToInsert) {
     })
 }
 
-//Load the existing tasks
 async function searchAllTasks(arrayTasks) {
     const resp = await fetch('tasks', { method: 'get' })
     let array = await resp.json()
@@ -73,3 +73,33 @@ async function searchAllTasks(arrayTasks) {
 
     mountTask(arrayTasks, divToInsert)
 }
+
+function concludeTask(e){
+
+    const input = e.target
+    
+    if(input.nodeName != "INPUT") return
+    
+    id = input.getAttribute('id').split('inputConluded')[1]
+    const labelContent = document.querySelector(`#labelText${id}`)
+    
+    allTasks.forEach(e => { 
+        if(e.id === parseInt(id)){
+            if(e.concluded === input.checked) {
+                e.concluded = false
+                input.checked = false
+                labelContent.style.textDecoration = "none"
+            }else {
+                e.concluded = input.checked
+                labelContent.style.textDecoration = "line-through"
+            }
+        } 
+    })
+    
+    
+    fetch(`tasks`, { method: 'put', headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body:`text=${labelContent.textContent}&concluded=${input.checked}&id=${id}`})
+}
+
+
+
