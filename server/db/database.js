@@ -1,3 +1,4 @@
+const { get } = require('express/lib/response')
 const { Pool } = require('pg')
 const pool = new Pool({
     user: 'me',
@@ -8,8 +9,16 @@ const pool = new Pool({
 })
 
 
+function generateNewId(response, text, concluded){
+    pool.query('SELECT MAX(id) FROM list', (err, result) => {
+        if(err) throw `There was an error in querying max id of database: ${err}`
+        else response.status(200).send({ id: result.rows[0].max ,text: text, concluded: concluded })
+    })
+}
+
+
 function getAllTasks(request, response){
-    pool.query('SELECT * FROM list', (err, result) => {
+    pool.query('SELECT * FROM list ORDER BY id', (err, result) => {
         if(err) throw `There was an error querying tasks: ${err}`
         else response.status(200).send(result.rows)
     })
@@ -17,15 +26,13 @@ function getAllTasks(request, response){
 
 function insertTask(request, response){
     const {text, concluded} = request.body
+    
     pool.query('INSERT INTO List (text, concluded) VALUES ($1, $2)', [text, concluded], (err, result) => {
         if(err) throw `There was an error insert the task: ${err}`
-        else{
-            response.status(200).send([pool.query('SELECT MAX(id) from list', (err, result) => {
-                return result.rows
-            }) ,text, concluded])
-        } 
-        
+        else console.log('User inserted successful!')
     })
+
+    generateNewId(response, text, concluded)
 }
 
 function updatedTask(request, response){
@@ -46,7 +53,6 @@ function deleteTask(request, response){
         else response.status(200).send('Task was deleted!')
     })
 }
-
-
-
+ 
 module.exports = { getAllTasks, insertTask, updatedTask, deleteTask}
+

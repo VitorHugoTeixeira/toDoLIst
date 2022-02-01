@@ -1,48 +1,75 @@
 //Url
 const url = 'http://localhost:3000'
-
+const allTasks = []
+const divToInsert = document.querySelector('.div-task-content')
 //Start application
 document.addEventListener('DOMContentLoaded', start)
 
-function start(){
+function start() {
+    searchAllTasks(allTasks)
     document.querySelector('#radioInsertTask').addEventListener('click', insertTask)
+
 }
 
 //Insert task to database and returm an array to insert in my document as new task 
-async function insertTask(e){
-    const inputInsert = document.querySelector('.insertTask').value
-    const divToInsert = document.querySelector('.div-task-content')
+async function insertTask(e) {
+    const inputInsert = document.querySelector('.insertTask')
+    const radioButton = document.querySelector('#radioInsertTask')
 
-    if(inputInsert.toString().replace(/\s/g,"") == "") alert('Fill the task field!') 
+    if (inputInsert.value.toString().replace(/\s/g, "") == "") alert('Fill the task field!')
     else {
-        const resp = await fetch('tasks', { method: 'post', headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
-        body: `text=${inputInsert}&concluded=false`})
-        
-        let arrayAnswers = await resp.json()        
-        // mountTask(arrayAnswers, divToInsert)
-        console.log(arrayAnswers)
+        const resp = await fetch('tasks', {
+            method: 'post', headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `text=${inputInsert.value}&concluded=false`
+        })
+
+        let arrayAnswers = []
+        arrayAnswers.push(await resp.json())
+
+        mountTask(arrayAnswers, divToInsert)
     }
+
+    //Clean the fields
+    radioButton.checked = false
+    inputInsert.value = ''
 
 }
 
-function mountTask(taskArray, divToInsert){
-    const div = document.createElement('div')
-    const radio = document.createElement('input')
-    const label = document.createElement('label')
+function mountTask(taskArray, divToInsert) {
 
-    //class
-    div.classList.add('task-content')
+    taskArray.forEach(e => {
+        
+        let div = document.createElement('div')
+        let radio = document.createElement('input')
+        let label = document.createElement('label')
 
-    //attibutes
-    radio.setAttribute('id', `inputConluded${taskArray[0]}`)
-    label.setAttribute('for', `inputConluded${taskArray[0]}`)
+        //class
+        div.classList.add('task-content')
+        label.classList.add('content-task')
 
-    //Insert text
-    label.innerHTML = taskArray[1]
-    radio.checked = taskArray[2]
+        //attibutes
+        radio.setAttribute('id', `inputConluded${e.id}`)
+        radio.setAttribute('type', 'radio')
+        label.setAttribute('for', `inputConluded${e.id}`)
 
-    divToInsert.appendChild(div)
-    divToInsert.appendChild(radio)
-    divToInsert.appendChild(label)
+        
+        label.innerHTML = e.text
+        radio.checked = e.concluded
 
+        divToInsert.appendChild(div)
+        div.appendChild(radio)
+        div.appendChild(label)
+
+        if(!allTasks.includes(e.id)) allTasks.push(taskArray)
+    })
+}
+
+//Load the existing tasks
+async function searchAllTasks(arrayTasks) {
+    const resp = await fetch('tasks', { method: 'get' })
+    let array = await resp.json()
+    
+    array.forEach(e => arrayTasks.push(e))
+
+    mountTask(arrayTasks, divToInsert)
 }
