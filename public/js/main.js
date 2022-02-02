@@ -70,6 +70,7 @@ function mountTask(taskArray, divToInsert) {
         iEdit.setAttribute('id', `editTask_${e.id}`)
         iDelete.setAttribute('id', `deleteTask_${e.id}`)
         text.setAttribute('id', `taskEditText${e.id}`)
+        div.setAttribute('id', `divTask${e.id}`)
 
         //Inserr text
         label.innerHTML = e.text
@@ -133,9 +134,22 @@ function manageTask(e){
     else if(e.target.id.split('_')[0] == 'deleteTask') deleteTask(e.target)
 }
 
-function deleteTask(id){
-    console.log('errrouuuu')
+function deleteTask(event){
+    
+    const id = event.id.split('_')[1]
+    
+    fetch(`tasks`, { 
+        method: 'delete', 
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body:`id=${id}`
+    })
+    
+    divToInsert.querySelectorAll('div').forEach(e => {
+        if(e.id == `divTask${id}`) divToInsert.removeChild(e)
+    })
 }
+
+
 function editTask(value){
     const id = value.id.split('_')[1]
     const labelText = document.querySelector(`#labelText${id}`)

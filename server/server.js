@@ -20,7 +20,7 @@ app.post('/tasks', database.insertTask)
 app.put('/tasks', database.updatedTask)
 
 //Delete task
-app.delete('/tasks:id', database.deleteTask)
+app.delete('/tasks', database.deleteTask)
 
 
 

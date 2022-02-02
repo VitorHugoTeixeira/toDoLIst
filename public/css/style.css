@@ -161,4 +161,20 @@ input[type='radio']:checked:before {
     main{
         width: 400px;
     }
+
+    .trashIcon, .iconEdit, .correctIcon{
+        font-size: 1.3em;
+        color: #fff;
+        margin: 10px;
+    }
+    .trashIcon:active, .iconEdit:active, .correctIcon:active{
+        font-size: 1.1em;
+    }
+
+    .header-title h1{
+        font-size: 1.7em;
+    }
+    .sun{
+        font-size: 1.4em;
+    }
 }

@@ -29,7 +29,6 @@ function insertTask(request, response){
     
     pool.query('INSERT INTO List (text, concluded) VALUES ($1, $2)', [text, concluded], (err, result) => {
         if(err) throw `There was an error insert the task: ${err}`
-        else console.log('User inserted successful!')
     })
 
     generateNewId(response, text, concluded)
@@ -46,7 +45,7 @@ function updatedTask(request, response){
 }
 
 function deleteTask(request, response){
-    const id = parseInt(request.params.id)
+    const {id} = request.body
 
     pool.query('DELETE FROM list WHERE ID=$1', [id], (err, result) => {
         if(err) throw `There was an error delete the task: ${err}`
