@@ -118,7 +118,43 @@ input[type='radio']:checked:before {
     font-family: 'Bree Serif', serif;
     font-size: 1.1em;
     color: #fff;
-    flex-grow: 1;   
+    flex-grow: 1;
+    display: block;   
+}
+
+.inputTaskText{
+    flex-grow: 1;
+    height: 100%;
+    border: none;
+    background: none;
+    font-family: 'Bree Serif', serif;
+    font-size: 1.1em;
+    color: #fff;
+    display: none;
+}
+
+.inputTaskText:focus{
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
+.trashIcon, .iconEdit, .correctIcon{
+    font-size: 1.7em;
+    color: #fff;
+    margin: 10px;
+}
+
+.trashIcon:hover, .iconEdit:hover{
+    color: #eb373798;
+}
+
+.correctIcon:hover{
+    color: #00d800;
+}
+
+.trashIcon:active, .iconEdit:active, .correctIcon:active{
+    font-size: 1.5em;
 }
 
 @media(max-width:600px){
